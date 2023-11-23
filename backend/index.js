@@ -15,6 +15,8 @@ app.use("/api/auth", require("./routes/UserRoute"));
 app.use("/api/blogs", require("./routes/BlogRoute"));
 app.use("/api/contact", require("./routes/ContactRoute"));
 
+app.use('/uploads', express.static('uploads'));
+
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });

@@ -9,7 +9,19 @@ import Typography from '@mui/material/Typography';
 import AuthContext from '../../context/auth/AuthContext';
 
 export default function Intro() {
-    const { user } = React.useContext(AuthContext);
+    const { getUser } = React.useContext(AuthContext);
+    const [user, setUser] = React.useState({ name: "" }) // Initialize user
+    React.useEffect(() => {
+
+        async function getUserDetails() {
+            const res = await getUser();
+            setUser({
+                name: res.name,
+            });
+        }
+
+        getUserDetails();
+    }, [getUser]);
     return (
         <Box sx={{ minWidth: 200, maxWidth: 300, overflow: "scroll", maxHeight: "85vh" }}>
             <Card variant="outlined">

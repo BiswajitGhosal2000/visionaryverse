@@ -1,17 +1,20 @@
 import * as React from 'react';
-import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Tooltip, MenuItem } from '@mui/material';
+import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Tooltip, MenuItem, Divider } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
 import AuthContext from '../context/auth/AuthContext';
 import logo from '../logo.png';
 import { Logout } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
-    const { user, getUser } = React.useContext(AuthContext);
+    const { getUser } = React.useContext(AuthContext);
+    const [user, setUser] = React.useState({ name: "", email: "", profileImage: "" }) // Initialize user
 
-    const [userPresent, setUserPresent] = React.useState(localStorage.getItem('token')); // Initialize userPresent
+    const [userPresent, setUserPresent] = React.useState(localStorage.getItem('token'));
+    const navigate = useNavigate();
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -33,14 +36,18 @@ function Navbar() {
     };
 
     React.useEffect(() => {
-        async function getUserDetails() {
-            await getUser();
-            const userPresent = localStorage.getItem('token');
-            // Update userPresent when getUserDetails is called
-            setUserPresent(userPresent);
-        }
 
-        const userPresent = localStorage.getItem('token');
+        async function getUserDetails() {
+            const res = await getUser();
+            setUser({
+                name: res.name,
+                email: res.email,
+                profileImage: res.profileImage,
+            });
+            const isUserPresent = localStorage.getItem('token');
+            // Update userPresent when getUserDetails is called
+            setUserPresent(isUserPresent);
+        }
         if (userPresent) {
             getUserDetails();
         }
@@ -127,7 +134,7 @@ function Navbar() {
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt={user.name} src={`${process.env.PUBLIC_URL}/assets/teammember1.webp`} />
+                                <Avatar alt={user.name} src={user.profileImage} />
                             </IconButton>
                         </Tooltip>
                         <Menu
@@ -147,12 +154,14 @@ function Navbar() {
                             onClose={handleCloseUserMenu}
                         >
                             <Typography variant="h6" component="h6" sx={{ mt: 2 }}> Welcome,</Typography>
-                            <MenuItem onClick={handleCloseUserMenu}>
+                            <Divider />
+                            <MenuItem >
                                 <Typography textAlign="center" >{user.name}</Typography>
                             </MenuItem>
-                            <MenuItem onClick={handleCloseUserMenu}>
-                                <Typography textAlign="center" >{user.email}</Typography>
+                            <MenuItem >
+                                <Typography textAlign="center" onClick={() => { navigate('/userProfile') }}>View Profile</Typography>
                             </MenuItem>
+                            <Divider />
                             <MenuItem onClick={logout}>
                                 <Typography textAlign="center" >logout <Logout /></Typography>
                             </MenuItem>

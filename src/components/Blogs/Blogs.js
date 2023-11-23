@@ -10,7 +10,22 @@ import AuthContext from '../../context/auth/AuthContext';
 function Blogs() {
     const [blogs, setBlogs] = useState([]);
     const { getAllBlogs } = useContext(BlogContext);
-    const { user } = useContext(AuthContext);
+    const { getUser } = useContext(AuthContext);
+    const [user, setUser] = useState({ name: "", email: "", role: "", profileImage: null }) // Initialize user
+    useEffect(() => {
+
+        async function getUserDetails() {
+            const res = await getUser();
+            setUser({
+                name: res.name,
+                email: res.email,
+                role: res.role,
+                profileImage: res.profileImage,
+            });
+        }
+
+        getUserDetails();
+    }, [getUser]);
 
 
     useEffect(() => {
@@ -24,7 +39,7 @@ function Blogs() {
     return (
         <Box sx={{ minWidth: 600, overflow: "scroll", maxHeight: "85vh" }} >
             <Box sx={{ minWidth: 500, bgcolor: "#1D2226", mx: 2, display: "flex", p: 2 }}>
-                <Avatar alt={user.name} src={`${process.env.PUBLIC_URL}/assets/teammember1.webp`} sx={{ mr: 3 }} />
+                <Avatar alt={user.name} src={user.profileImage} sx={{ mr: 3 }} />
                 <AddBlog />
             </Box>
             <Box sx={{ minWidth: 500 }} style={{ marginLeft: "1rem", marginRight: "1rem" }}>

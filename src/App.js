@@ -12,6 +12,9 @@ import BlogState from './context/blog/BlogState';
 import ViewBlog from './components/Blogs/ViewBlog';
 import AddBlog from './components/Blogs/AddBlog';
 import UpdateBlog from './components/Blogs/UpdateBlog';
+import Profile from './components/User/Profile';
+import EditProfile from './components/User/EditProfile';
+
 // import Toast from './components/Toast';
 
 function App() {
@@ -24,6 +27,8 @@ function App() {
           <Routes>
             <Route exact path='/' element={<Home />} />
             <Route exact path='/about' element={<About />} />
+            <Route exact path='/userprofile' element={< Profile />} />
+            <Route exact path='/editprofile' element={<EditProfile />} />
             <Route exact path='/userblog' element={<UserBlog />} />
             <Route path="/viewblog/:id" element={<ViewBlog />} />
             <Route path="/updateblog/:id" element={<UpdateBlog />} />

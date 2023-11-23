@@ -47,7 +47,7 @@ export default function BlogItem(props) {
         <Card sx={{ maxWidth: 1000, bgcolor: "#1D2226", color: "white" }} style={{ marginTop: "1rem", width: "100%" }}>
             <CardHeader
                 avatar={
-                    <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                    <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe" alt={author} src={blog.author[0].profileImage}>
                         {author.length > 0 ? author.substring(0, 1) : ""}
                     </Avatar>
                 }

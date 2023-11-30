@@ -60,18 +60,24 @@ const BlogState = (props) => {
     // Create a blog
     const createBlog = async (blog) => {
         const url = `${host}/api/blogs/createblog`;
+        const formData = new FormData();
+        formData.append('title', blog.title);
+        formData.append('content', blog.content);
+        formData.append('tag', blog.tag);
+        formData.append('contentImg', blog.contentImg);
+        // formData.append('date', Date.now());
         try {
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
                     'auth-token': localStorage.getItem('token')
                 },
-                body: JSON.stringify(blog)
+                body: formData
             });
             const json = await response.json();
             setBlogs([...blogs, json.blog]);
             console.info({ message: "Blog created successfully", title: json.blog.title });
+            return json;
         } catch (error) {
             console.error(error);
         }
@@ -80,15 +86,19 @@ const BlogState = (props) => {
     // Update a blog
     const updateBlog = async (blog) => {
         const url = `${host}/api/blogs/updateblog/${blog.id}`;
-        console.log(url)
+        const formData = new FormData();
+        formData.append('title', blog.title);
+        formData.append('content', blog.content);
+        formData.append('tag', blog.tag);
+        formData.append('contentImg', blog.contentImg);
+        // formData.append('date', Date.now());
         try {
             const response = await fetch(url, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json',
                     'auth-token': localStorage.getItem('token')
                 },
-                body: JSON.stringify(blog)
+                body: formData
             });
             const json = await response.json();
             setBlogs([...blogs, json.blog]);
@@ -99,9 +109,28 @@ const BlogState = (props) => {
             return false
         }
     }
+    const addComment = async (id, comment) => {
+        const blogId = id;
+        const url = `${host}/api/blogs/addcomment/${blogId}`;
+        try {
+            const response = await fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'auth-token': localStorage.getItem('token')
+                },
+                body: JSON.stringify({ comment })
+            });
+            const json = await response.json();
+            console.log(json);
+            return json;
+        } catch (error) {
+            console.error("BlogState: " + error);
+        }
+    }
 
     return (
-        <BlogContext.Provider value={{ blogs, getAllBlogs, getUserBlogs, createBlog, viewBlog, updateBlog }}>
+        <BlogContext.Provider value={{ blogs, getAllBlogs, getUserBlogs, createBlog, viewBlog, updateBlog, addComment }}>
             {props.children}
         </BlogContext.Provider>
     )

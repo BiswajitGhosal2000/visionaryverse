@@ -31,11 +31,7 @@ function Signup() {
             <form onSubmit={signUP}>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
-                        <TextField
-                            label="Name"
-                            name="name"
-                            fullWidth
-                            variant="standard"
+                        <TextField label="Name" name="name" fullWidth variant="standard"
                             value={credentials.name}
                             onChange={handleChange}
                             required

@@ -15,7 +15,8 @@ export default function AddBlog() {
     const [blog, setBlog] = React.useState({
         title: '',
         content: '',
-        tag: 'General'
+        tag: 'General',
+        contentImg: null
     });
     const { createBlog } = React.useContext(BlogContext);
     const handleChange = (e) => {
@@ -23,21 +24,26 @@ export default function AddBlog() {
         setBlog({ ...blog, [e.target.name]: e.target.value })
 
     }
-    const handleSubmit = (e) => {
+    const handleImageChange = (e) => {
+        e.preventDefault();
+        setBlog({ ...blog, contentImg: e.target.files[0] })
+    }
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(blog)
-        createBlog(blog);
+        await createBlog(blog);
         alert("Blog Created Successfully");
         setBlog({
             title: '',
             content: '',
-            tag: ''
+            tag: '',
+            contentImg: null
         })
     }
 
     return (
         <div>
-            <TriggerButton type="input" onClick={handleOpen} sx={{ width: 450, color: 'white' }}>
+            <TriggerButton type="input" onClick={handleOpen} sx={{ width: 450, }}>
                 Start a  Blog
             </TriggerButton>
 
@@ -76,6 +82,10 @@ export default function AddBlog() {
                         <div className="mb-3">
                             <label htmlFor="content" className="form-label">Content</label>
                             <textarea type="text" className="form-control" rows='8' id="content" name='content' onChange={handleChange} required value={blog.content} />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="formFile" className="form-label">Upload Image</label>
+                            <input className="form-control" type="file" id="formFile" onChange={handleImageChange} />
                         </div>
                         <button type="submit" className="btn btn-primary my-1" >Submit</button>
                     </form>

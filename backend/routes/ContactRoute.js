@@ -1,9 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { body, validationResult } = require('express-validator')
-// const bcrypt = require('bcryptjs');
-// const jwt = require('jsonwebtoken');
-// require('dotenv').config();
+const { body, validationResult } = require('express-validator');
 
 const Contact = require('../models/Contact');
 
@@ -12,22 +9,15 @@ const Contact = require('../models/Contact');
 // @desc    Register user
 // @access  User
 
-router.post('/contactinfo', [
-    body('name', 'Name is required').not().isEmpty(),
-    body('email', 'Please include a valid email').isEmail()
-], async (req, res) => {
-    console.log(req.body.name)
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        console.error(errors.array());
-        return res.status(400).json({ errors: errors.array() });
-    }
-    const { name, email, message } = req.body;
+router.post('/contactinfo', async (req, res) => {
+    console.log(req.body.email)
     try {
+        const existing = await Contact.findOne({ email: req.body.email });
+        if (existing) {
+            return res.status(400).json({ error: "You're already subscribed !" });
+        }
         const contact = await Contact.create({
-            name: name,
-            email: email,
-            message: message,
+            email: req.body.email,
         });
         res.json({ contact });
     } catch (error) {

@@ -4,11 +4,15 @@ import BlogContext from '../../context/blog/BlogContext';
 import AuthContext from '../../context/auth/AuthContext';
 
 function ViewBlog() {
-    const blogImg = "https://img.freepik.com/premium-photo/how-start-blog-blogging-beginners-ways-monetize-your-blog-blog-word-table-with-laptop_72482-5630.jpg";
     const { id } = useParams();
     const [blog, setBlog] = useState({});
     const { getUserById } = useContext(AuthContext);
-    const [author, setAuthor] = useState("")
+    const [author, setAuthor] = useState({
+        name: '',
+        profileImage: '',
+        role: '',
+        email: ''
+    })
     const { viewBlog } = useContext(BlogContext);
 
     useEffect(() => {
@@ -17,12 +21,12 @@ function ViewBlog() {
             const blog = await viewBlog(id);
             setBlog(blog);
             const writer = await getUserById(blog.user);
-            setAuthor(writer.name);
+            setAuthor(writer);
         }
         getData();
         document.title = blog.title + " || " + blog.tag;
         // eslint-disable-next-line
-    }, [viewBlog, id, blog]);
+    }, [id]);
 
     return (
         <div className='container my-5'>
@@ -30,7 +34,7 @@ function ViewBlog() {
                 <h2 className='text-center col-md-12'>{blog.title}</h2>
                 <div className=" col-md-9">
                     <div className="card-body">
-                        <img src={blogImg} className="card-img-top rounded" alt="..." height={400} />
+                        <img src={blog.contentImg} className="card-img-top rounded" alt="..." height={400} />
                         <div className=" mx-2 ">
                             <blockquote>{blog.content}</blockquote>
                         </div>
@@ -42,7 +46,9 @@ function ViewBlog() {
                             <h5 className="card-title bg-dark">About The Blog</h5>
                         </div>
                         <div className="card-body">
-                            <h5 className="card-text">Author:  {author}</h5>
+                            <img src={author.profileImage} alt="..." className="rounded-circle" height={100} width={100} />
+                            <h5 className="card-text">Author:  {author.name}</h5>
+                            <p className="card-text">Role: {author.role}</p>
                             <small >Last updated: {blog.date}</small>
                             <p >Tag : {blog.tag}</p>
                         </div>

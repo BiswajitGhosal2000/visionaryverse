@@ -18,12 +18,13 @@ function AuthState(props) {
         return json.success;
     }
 
-    const updateUser = async (name, email, profileImage) => {
+    const updateUser = async (user) => {
         const url = `${host}/api/auth/updateuser`
         const formData = new FormData();
-        formData.append('name', name);
-        formData.append('email', email);
-        formData.append('profileImage', profileImage);
+        formData.append('name', user.name);
+        formData.append('email', user.email);
+        formData.append('role', user.role)
+        formData.append('profileImage', user.profileImage);
         const response = await fetch(url, {
             method: "POST",
             headers: {
@@ -72,8 +73,22 @@ function AuthState(props) {
         const json = await response.json();
         return json;
     }
+
+    const contactInfo = async (email) => {
+        const url = `${host}/api/contact/contactinfo`
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email })
+        });
+        const json = await response.json();
+        return json;
+    }
+
     return (
-        <AuthContext.Provider value={{ login, signup, updateUser, getUser, getUserById }}>
+        <AuthContext.Provider value={{ login, signup, updateUser, getUser, getUserById, contactInfo }}>
             {props.children}
         </AuthContext.Provider>
     )

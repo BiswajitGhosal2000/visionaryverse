@@ -12,11 +12,16 @@ function UpdateBlog() {
         id: "",
         title: "",
         content: "",
-        tag: ""
+        tag: "",
+        contentImg: null
     });
 
     const handleChange = (e) => {
         setUBlog({ ...ublog, [e.target.name]: e.target.value });
+    };
+
+    const handleImageChange = (e) => {
+        setUBlog({ ...ublog, contentImg: e.target.files[0] });
     };
 
     const handleSubmit = async (e) => {
@@ -35,7 +40,8 @@ function UpdateBlog() {
                 id: id,
                 title: blog.title,
                 content: blog.content,
-                tag: blog.tag
+                tag: blog.tag,
+                contentImg: blog.contentImg
             });
         };
         setData();
@@ -87,6 +93,19 @@ function UpdateBlog() {
                         onChange={handleChange}
                         value={ublog.content}
                         minLength={5}
+                    />
+                </FormControl>
+                <FormControl fullWidth margin="normal">
+                    <img src={ublog.contentImg} alt='Blog' />
+                </FormControl>
+                <FormControl fullWidth margin="normal">
+                    <TextField
+                        label="Image"
+                        id="image"
+                        name="image"
+                        variant="standard"
+                        type="file"
+                        onChange={handleImageChange}
                     />
                 </FormControl>
                 <FormControl fullWidth margin="normal">

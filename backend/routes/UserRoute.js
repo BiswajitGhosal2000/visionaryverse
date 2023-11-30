@@ -11,6 +11,19 @@ const User = require('../models/User');
 const JWT_SECRET = process.env.JWT_SECRET;
 const userLogger = require('../logger/userLogger');
 const fetchuser = require('../middleware/fetchuser');
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/users/');
+    },
+    filename: async (req, file, cb) => {
+
+
+        const filename = `profile_${req.user}.jpg`;
+        cb(null, filename);
+    },
+});
+
+const upload = multer({ storage: storage });
 
 const host = "http://localhost:5000/"
 
@@ -55,19 +68,6 @@ router.post('/signup', [
 // @route   POST api/auth/updateuser
 // @desc    Update user
 // @access  Public
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/users/');
-    },
-    filename: (req, file, cb) => {
-        const userId = req.user; // Make sure to include the user ID in the request body
-        const filename = `profile_${userId}.jpg`;
-        console.log(filename);
-        cb(null, filename);
-    },
-});
-
-const upload = multer({ storage: storage });
 router.post('/updateuser', fetchuser, upload.single('profileImage'), async (req, res) => {
     let success = false;
     const uploadedFile = req.file;
@@ -78,18 +78,22 @@ router.post('/updateuser', fetchuser, upload.single('profileImage'), async (req,
     // }
     try {
         //check whether the user with this email exists already
-        let user = await User.findOne({ email: req.body.email })
-        user.name = req.body.name;
-        user.email = req.body.email;
-        user.profileImage = host + uploadedFile.path;
+        const newUser = {};
+        if (req.body.name !== undefined) { newUser.name = req.body.name };
+        if (req.body.email !== undefined) { newUser.email = req.body.email };
+        if (req.body.role !== undefined) { newUser.role = req.body.role };
+        if (req.body.date !== undefined) { newUser.date = req.body.date };
+        if (uploadedFile) { newUser.profileImage = host + uploadedFile.path };
+        const updatedUser = await User.findByIdAndUpdate(req.user, { $set: newUser }, { new: true });
         //update user and save to database
-        user = await user.save();
+        if (!updatedUser) {
+            return res.status(404).send("Blog not found");
+        }
         success = true;
         userLogger.info({ message: "User Updated" + req.body.email + req.body.name, date: new Date() });
         res.json({ success })
-
     } catch (error) {
-        userLogger.error({ error: error.message, date: new Date() });
+        userLogger.error({ location: "Update User", error: error.message, date: new Date() });
         res.status(500).json({ success: false, error: 'Internal Server Error' });
     }
 });

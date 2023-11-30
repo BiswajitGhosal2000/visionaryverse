@@ -6,12 +6,14 @@ import { Box } from '@mui/system';
 import AddBlog from './AddBlog';
 import { Avatar } from '@mui/material';
 import AuthContext from '../../context/auth/AuthContext';
+import BlogItemSkeleton from '../Skeletons/BlogItemSkeleton';
 
 function Blogs() {
     const [blogs, setBlogs] = useState([]);
     const { getAllBlogs } = useContext(BlogContext);
     const { getUser } = useContext(AuthContext);
-    const [user, setUser] = useState({ name: "", email: "", role: "", profileImage: null }) // Initialize user
+    const [user, setUser] = useState({ name: "", email: "", role: "", profileImage: null });
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
 
         async function getUserDetails() {
@@ -32,21 +34,26 @@ function Blogs() {
         async function getBlogs() {
             const result = await getAllBlogs();
             setBlogs(result);
+            setLoading(false);
         }
         getBlogs();
         // eslint-disable-next-line
     }, [])
     return (
-        <Box sx={{ minWidth: 600, overflow: "scroll", maxHeight: "85vh" }} >
+        <Box sx={{ minWidth: 600, overflow: "scroll", maxHeight: "100vh" }} >
             <Box sx={{ minWidth: 500, bgcolor: "#1D2226", mx: 2, display: "flex", p: 2 }}>
                 <Avatar alt={user.name} src={user.profileImage} sx={{ mr: 3 }} />
-                <AddBlog />
+                <AddBlog sx={{ color: "white" }} />
             </Box>
             <Box sx={{ minWidth: 500 }} style={{ marginLeft: "1rem", marginRight: "1rem" }}>
-                {blogs.length === 0 && 'No Notes to Display'}
-                {
+                {loading ?
+                    (<React.Fragment>
+                        <BlogItemSkeleton />
+                        <BlogItemSkeleton />
+                        <BlogItemSkeleton />
+                    </React.Fragment>) :
                     blogs.map((blog) => {
-                        return <BlogItem key={blog._id} blog={blog} />
+                        return <BlogItem key={blog._id} blog={blog} loading={loading} />
                     })
                 }
             </Box>

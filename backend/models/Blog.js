@@ -8,7 +8,8 @@ const blogSchema = Schema({
     },
     title: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     content: {
         type: String,
@@ -17,6 +18,28 @@ const blogSchema = Schema({
     tag: {
         type: String,
         required: true
+    },
+    comments: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User', // Assuming your user model is named 'User'
+                required: true
+            },
+            comment: {
+                type: String,
+                required: true
+            },
+            date: {
+                type: Date,
+                default: new Date()
+            }
+        }
+    ],
+    contentImg: {
+        type: String,
+        required: false,
+        default: "https://clickfirstmarketing.com/wp-content/uploads/Purpose-of-Blogging.jpeg"
     },
     date: {
         type: Date,

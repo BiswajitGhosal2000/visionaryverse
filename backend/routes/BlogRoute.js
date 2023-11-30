@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { body, validationResult } = require('express-validator')
+const { body, validationResult } = require('express-validator');
+const mongoose = require('mongoose');
+
 // const bcrypt = require('bcryptjs');
 // const jwt = require('jsonwebtoken');
 // require('dotenv').config();
@@ -8,7 +10,9 @@ const { body, validationResult } = require('express-validator')
 const Blog = require('../models/Blog');
 const blogLogger = require('../logger/blogLogger');
 const fetchuser = require('../middleware/fetchuser');
+const upload = require('../middleware/uploadphoto');
 
+const host = "http://localhost:5000/"
 
 // Create a blog using: POST "/api/blogs/createblog". Require Auth
 // @route   POST /api/blogs/createblog
@@ -16,26 +20,27 @@ const fetchuser = require('../middleware/fetchuser');
 // @access  User
 
 router.post('/createblog', fetchuser,
-    [body('title', 'Please enter a title').isLength({ min: 5 }),
-    body('content', 'please provide some content').isLength({ min: 5 })],
+    upload.single('contentImg'),
     async (req, res) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            blogLogger.error(errors.array());
-            return res.status(400).json({ errors: errors.array() });
-        }
-        const { title, content, tag, } = req.body;
+        const uploadedFile = req.file;
+        console.log(req.body.content);
+        // const errors = validationResult(req);
+        // if (!errors.isEmpty()) {
+        //     blogLogger.error(errors.array());
+        //     return res.status(400).json({ errors: errors.array() });
+        // }
         try {
             const blog = await Blog.create({
-                title: title,
-                content: content,
-                tag: tag,
-                user: req.user
+                title: req.body.title,
+                content: req.body.content,
+                tag: req.body.tag,
+                user: req.user,
+                contentImg: host + uploadedFile.path
             });
             res.json({ blog });
             blogLogger.info({ message: "Blog created successfully", title: blog.title, user: req.user });
         } catch (error) {
-            blogLogger.error(error, req.user.id);
+            blogLogger.error(error.message, req.user.id);
             res.status(500).send("Internal Server Error");
         }
 
@@ -64,18 +69,20 @@ router.get('/viewblog/:id', async (req, res) => {
 // @desc    Update user blogs
 // @access  User
 
-router.put('/updateblog/:id', fetchuser, async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        blogLogger.error(errors.array());
-        return res.status(400).json({ errors: errors.array() });
-    }
-    const { title, content, tag, } = req.body;
+router.put('/updateblog/:id', fetchuser, upload.single('contentImg'), async (req, res) => {
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //     blogLogger.error(errors.array());
+    //     return res.status(400).json({ errors: errors.array() });
+    // } 
+    const uploadedFile = req.file;
     try {
         const newBlog = {};
-        if (title) { newBlog.title = title };
-        if (content) { newBlog.content = content };
-        if (tag) { newBlog.tag = tag };
+        if (req.body.title !== undefined) { newBlog.title = req.body.title };
+        if (req.body.content !== undefined) { newBlog.content = req.body.content };
+        if (req.body.tag !== undefined) { newBlog.tag = req.body.tag };
+        if (req.body.date !== undefined) { newBlog.date = req.body.date };
+        if (uploadedFile) { newBlog.contentImg = host + uploadedFile.path };
         const blog = await Blog.findById(req.params.id);
         if (!blog) {
             return res.status(404).send("Not Found");
@@ -101,6 +108,44 @@ router.put('/updateblog/:id', fetchuser, async (req, res) => {
     }
 });
 
+router.put('/addcomment/:id', fetchuser, async (req, res) => {
+    const userId = req.user;
+    const commentText = req.body.comment;
+
+    // Validate if userId is a valid ObjectId
+    if (!mongoose.Types.ObjectId.isValid(userId) || !commentText) {
+        return res.status(400).json({ error: "Invalid user ID or missing comment text" });
+    }
+    const comment = {
+        user: new mongoose.Types.ObjectId(userId),
+        comment: commentText,
+        date: Date.now()
+    };
+
+    try {
+        const blog = await Blog.findById(req.params.id);
+
+        if (!blog) {
+            return res.status(404).json({ error: "Blog not found" });
+        }
+
+        // Ensure that the 'comments' array is initialized if it doesn't exist
+        if (!blog.comments) {
+            blog.comments = [];
+        }
+
+        blog.comments.unshift(comment);
+        await blog.save();
+
+        res.json({ blog });
+    } catch (error) {
+        // Handle other errors
+        blogLogger.error(error.message, req.user);
+        res.status(500).send("Internal Server Error");
+    }
+
+});
+
 // Get all blogs using: GET "/api/blogs/getuserblogs". require Auth
 // @route   GET /api/blogs/getuserblogs
 // @desc    Get user blogs
@@ -114,7 +159,7 @@ router.get('/getuserblogs', fetchuser, async (req, res) => {
     }
     try {
         // console.log(first)
-        const blogs = await Blog.find({ user: req.user });
+        const blogs = await Blog.find({ user: req.user }).sort({ date: -1 });
         res.json({ blogs: blogs });
     } catch (error) {
         blogLogger.error(error, req.user.id);
@@ -142,7 +187,7 @@ router.get('/getallblogs', async (req, res) => {
             {
                 $unwind: '$user'
             }
-        ]);
+        ]).sort({ date: -1 });
 
         res.json({ blogs });
     } catch (error) {

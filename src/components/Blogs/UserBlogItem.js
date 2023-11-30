@@ -12,7 +12,7 @@ export default function UserBlogItem(props) {
     const { serial, blog } = props;
 
     return (
-        <TableRow>
+        <TableRow hover role="checkbox" tabIndex={-1}>
             <TableCell>{serial}</TableCell>
             <TableCell>
                 <MUILink
@@ -27,7 +27,8 @@ export default function UserBlogItem(props) {
             </TableCell>
             <TableCell>{blog.content.substring(0, 50)}</TableCell>
             <TableCell>{blog.tag}</TableCell>
-            <TableCell>{blog.date.split("T")[0]}</TableCell>
+            <TableCell>{blog.date}</TableCell>
+            <TableCell><img src={blog.contentImg} alt={blog.title} height={100} width={100} /></TableCell>
             <TableCell>
                 <MUILink
                     component={Link}

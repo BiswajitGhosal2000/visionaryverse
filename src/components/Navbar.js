@@ -5,6 +5,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AuthContext from '../context/auth/AuthContext';
 import logo from '../logo.png';
 import { Logout } from '@mui/icons-material';
+import BookIcon from '@mui/icons-material/Book';
+import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
+import ReadMoreIcon from '@mui/icons-material/ReadMore';
 import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
@@ -13,7 +16,7 @@ function Navbar() {
     const { getUser } = React.useContext(AuthContext);
     const [user, setUser] = React.useState({ name: "", email: "", profileImage: "" }) // Initialize user
 
-    const [userPresent, setUserPresent] = React.useState(localStorage.getItem('token'));
+    const [userPresent, setUserPresent] = React.useState(false);
     const navigate = useNavigate();
 
     const handleOpenNavMenu = (event) => {
@@ -32,11 +35,14 @@ function Navbar() {
     };
     const logout = () => {
         localStorage.removeItem('token');
+        setUserPresent(false);
         window.location.href = '/';
     };
 
     React.useEffect(() => {
-
+        const isUserPresent = localStorage.getItem('token') !== null;
+        // Update userPresent when getUserDetails is called
+        setUserPresent(isUserPresent);
         async function getUserDetails() {
             const res = await getUser();
             setUser({
@@ -44,9 +50,7 @@ function Navbar() {
                 email: res.email,
                 profileImage: res.profileImage,
             });
-            const isUserPresent = localStorage.getItem('token');
-            // Update userPresent when getUserDetails is called
-            setUserPresent(isUserPresent);
+
         }
         if (userPresent) {
             getUserDetails();
@@ -55,36 +59,24 @@ function Navbar() {
 
 
     return (
+        { userPresent } &&
         <AppBar position="static" >
-            <Container maxWidth="xl">
+            <Container maxWidth="xl" sx={{ marginRight: "5rem" }}>
                 <Toolbar disableGutters>
-                    <Typography variant="h5" noWrap component="a" href="/"
+                    <Typography variant="h5" noWrap
                         sx={{
-                            mr: 2,
-                            display: { xs: 'none', md: 'flex' },
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '0rem',
-                            textDecoration: 'none',
+                            mr: 2, display: { xs: 'none', md: 'flex' }, fontFamily: 'monospace', fontWeight: 700,
+                            letterSpacing: '0rem', textDecoration: 'none',
                         }}
                     >
                         <img src={logo} alt="" width={30} height={30} />
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-                        <IconButton
-                            size="large"
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleOpenNavMenu}
-                        >
+                        <IconButton size="large" aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleOpenNavMenu}>
                             <MenuIcon />
-
                         </IconButton>
-                        <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorElNav}
+                        <Menu id="menu-appbar" anchorEl={anchorElNav}
                             anchorOrigin={{
                                 vertical: 'bottom',
                                 horizontal: 'left',
@@ -96,16 +88,33 @@ function Navbar() {
                             }}
                             open={Boolean(anchorElNav)}
                             onClose={handleCloseNavMenu}
-                            sx={{
-                                display: { xs: 'block', md: 'none' },
-                            }}
+                            sx={{ display: { xs: 'block', md: 'none' }, }}
                         >
                             <MenuItem >
-                                <Typography sx={{ color: 'black', textDecoration: "none" }} textAlign="center" variant="h5" noWrap component="a" href='/userblog'>My Blog</Typography>
+                                <IconButton color="inherit" component="a" onClick={() => navigate('/')} >
+                                    <DynamicFeedIcon />
+                                    <Typography sx={{ color: 'black', textDecoration: "none", mx: 1, }} textAlign="center" variant="body1" noWrap>
+                                        Feed
+                                    </Typography>
+                                </IconButton>
                             </MenuItem>
-                            <MenuItem>
-                                <Typography sx={{ color: 'black', textDecoration: "none" }} textAlign="center" variant="h5" noWrap component="a" href="/about">About</Typography>
+                            <MenuItem >
+                                <IconButton color="inherit" component="a" onClick={() => navigate('/userblog')}>
+                                    <BookIcon />
+                                    <Typography sx={{ color: 'black', textDecoration: "none", mx: 1 }} textAlign="center" variant="body1" noWrap>
+                                        My Blog
+                                    </Typography>
+                                </IconButton>
                             </MenuItem>
+                            <MenuItem >
+                                <IconButton color="inherit" component="a" onClick={() => navigate('/about')}>
+                                    <ReadMoreIcon />
+                                    <Typography sx={{ color: 'black', textDecoration: "none", mx: 1 }} textAlign="center" variant="body1" noWrap>
+                                        About
+                                    </Typography>
+                                </IconButton>
+                            </MenuItem>
+
                         </Menu>
                     </Box>
 
@@ -127,12 +136,28 @@ function Navbar() {
                         <img src={logo} alt="" width={30} height={30} />
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        <Typography sx={{ color: 'white', textDecoration: "none", mx: 1 }} textAlign="center" variant="h6" noWrap component="a" href='/userblog'>My Blog</Typography>
-                        <Typography sx={{ color: 'white', textDecoration: "none", mx: 1 }} textAlign="center" variant="h6" noWrap component="a" href="/about">About</Typography>
+                        <IconButton color="inherit" component="a" onClick={() => navigate('/')}>
+                            <DynamicFeedIcon />
+                            <Typography sx={{ color: 'white', textDecoration: "none", mx: 1 }} textAlign="center" variant="body1" noWrap>
+                                Feed
+                            </Typography>
+                        </IconButton>
+                        <IconButton color="inherit" component="a" onClick={() => navigate('/userblog')} >
+                            <BookIcon />
+                            <Typography sx={{ color: 'white', textDecoration: "none", mx: 1 }} textAlign="center" variant="body1" noWrap>
+                                My Blog
+                            </Typography>
+                        </IconButton>
+                        <IconButton color="inherit" component="a" onClick={() => navigate('/about')}>
+                            <ReadMoreIcon />
+                            <Typography sx={{ color: 'white', textDecoration: "none", mx: 1 }} textAlign="center" variant="body1" noWrap>
+                                About
+                            </Typography>
+                        </IconButton>
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
+                        <Tooltip title="Profile">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                 <Avatar alt={user.name} src={user.profileImage} />
                             </IconButton>
@@ -153,8 +178,6 @@ function Navbar() {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            <Typography variant="h6" component="h6" sx={{ mt: 2 }}> Welcome,</Typography>
-                            <Divider />
                             <MenuItem >
                                 <Typography textAlign="center" >{user.name}</Typography>
                             </MenuItem>

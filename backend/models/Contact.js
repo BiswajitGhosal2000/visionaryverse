@@ -4,11 +4,11 @@ const { Schema } = mongoose;
 const contactSchema = new Schema({
     name: {
         type: String,
-        required: true
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
     },
     message: {
         type: String,

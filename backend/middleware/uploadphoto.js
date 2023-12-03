@@ -1,11 +1,17 @@
-const multer = require('multer'); // Assuming you have a Blog model
+const multer = require('multer');
+const { v4: uuidv4 } = require('uuid');
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'uploads/blogs/');
     },
-    filename: async (req, file, cb) => {
-        const filename = `blog_${req.body.title}_${req.user}.jpg`;
+    filename: (req, file, cb) => {
+        const id = uuidv4(); // Generate a random unique identifier
+        const filename = `${req.user}_blog_${id}.jpg`;
+
+        // Add the generated id to the request object
+        req._id = id;
+
         cb(null, filename);
     },
 });

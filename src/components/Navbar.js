@@ -14,7 +14,7 @@ function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const { getUser } = React.useContext(AuthContext);
-    const [user, setUser] = React.useState({ name: "", email: "", profileImage: "" }) // Initialize user
+    const [user, setUser] = React.useState({ name: "", email: "", profileImage: null }) // Initialize user
 
     const [userPresent, setUserPresent] = React.useState(false);
     const navigate = useNavigate();
@@ -36,7 +36,7 @@ function Navbar() {
     const logout = () => {
         localStorage.removeItem('token');
         setUserPresent(false);
-        window.location.href = '/';
+        navigate('/');
     };
 
     React.useEffect(() => {

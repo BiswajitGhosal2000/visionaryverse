@@ -1,61 +1,97 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import { Typography, Card, CardHeader, CardContent, CardMedia, Avatar, Grid, Paper, BottomNavigationAction, BottomNavigation, Divider } from '@mui/material';
+import RestoreIcon from '@mui/icons-material/Restore';
+import IconButton from '@mui/material/IconButton';
+
 import BlogContext from '../../context/blog/BlogContext';
 import AuthContext from '../../context/auth/AuthContext';
+import Comment from './Comment';
+import MoreOption from './MoreOption';
+
 
 function ViewBlog() {
     const { id } = useParams();
     const [blog, setBlog] = useState({});
-    const { getUserById } = useContext(AuthContext);
     const [author, setAuthor] = useState({
         name: '',
         profileImage: '',
         role: '',
         email: ''
-    })
+    });
+    const { getUserById } = useContext(AuthContext);
     const { viewBlog } = useContext(BlogContext);
+    document.title = blog.tag + ' || ' + blog.title;
 
     useEffect(() => {
         // Fetch the blog post using the `id` parameter
         async function getData() {
-            const blog = await viewBlog(id);
-            setBlog(blog);
-            const writer = await getUserById(blog.user);
+            const blogData = await viewBlog(id);
+            setBlog(blogData);
+            const writer = await getUserById(blogData.user);
             setAuthor(writer);
         }
         getData();
-        document.title = blog.title + " || " + blog.tag;
+
         // eslint-disable-next-line
     }, [id]);
 
     return (
-        <div className='container my-5'>
-            <div className="row">
-                <h2 className='text-center col-md-12'>{blog.title}</h2>
-                <div className=" col-md-9">
-                    <div className="card-body">
-                        <img src={blog.contentImg} className="card-img-top rounded" alt="..." height={400} />
-                        <div className=" mx-2 ">
-                            <blockquote>{blog.content}</blockquote>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-md-3">
-                    <div className="card">
-                        <div className="card-header bg-dark">
-                            <h5 className="card-title bg-dark">About The Blog</h5>
-                        </div>
-                        <div className="card-body">
-                            <img src={author.profileImage} alt="..." className="rounded-circle" height={100} width={100} />
-                            <h5 className="card-text">Author:  {author.name}</h5>
-                            <p className="card-text">Role: {author.role}</p>
-                            <small >Last updated: {blog.date}</small>
-                            <p >Tag : {blog.tag}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <Grid container padding={3}>
+            <Grid item xs={8}>
+                <Card className="bg-dark text-white">
+                    <CardMedia
+                        component="img"
+                        alt={blog.title}
+                        height="400"
+                        image={blog.contentImg}
+                        padding={3}
+                        className='p-3'
+                    />
+                    <CardContent sx={{ overflow: "scroll", maxHeight: "50vh" }}>
+                        <Typography variant="body1">{blog.content}</Typography>
+                    </CardContent>
+                </Card>
+            </Grid>
+            <Grid item xs={4}>
+                <Card>
+                    <CardHeader
+                        title={author.name}
+                        titleTypographyProps={{ variant: 'h5', color: 'primary', fontWeight: "bold" }}
+                        subheader={author.role}
+                        subheaderTypographyProps={{ variant: 'h6', color: 'secondary' }}
+                        className="bg-dark"
+                        avatar={<Avatar alt="Author Avatar" src={author.profileImage} sx={{ width: 50, height: 50 }} />}
+                        action={
+                            <IconButton aria-label="settings">
+                                <MoreOption blog={blog} />
+                            </IconButton>}
+                    />
+                    <CardContent className='bg-dark text-white'>
+                        <Typography variant="h5" paragraph>
+                            {blog.tag}   ||    {blog.title}
+                        </Typography>
+                        <Typography variant="body2" paragraph>
+                            Last Updated: {blog.date}
+                        </Typography>
+                    </CardContent>
+                    <Divider />
+                    <CardContent>
+                        {blog.comments ?
+                            blog.comments.map((comment) => {
+                                return <Comment key={comment._id} comment={comment} />;
+                            }) : <Typography variant="body2" component="p">No Comments</Typography>}
+                    </CardContent>
+                </Card>
+                <Paper elevation={3}>
+                    <BottomNavigation
+                        showLabels
+                    >
+                        <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
+                    </BottomNavigation>
+                </Paper>
+            </Grid>
+        </Grid>
     );
 }
 

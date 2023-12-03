@@ -7,6 +7,7 @@ import AddBlog from './AddBlog';
 import { Avatar } from '@mui/material';
 import AuthContext from '../../context/auth/AuthContext';
 import BlogItemSkeleton from '../Skeletons/BlogItemSkeleton';
+import InfiniteScroll from "react-infinite-scroll-component";
 
 function Blogs() {
     const [blogs, setBlogs] = useState([]);
@@ -45,6 +46,17 @@ function Blogs() {
                 <Avatar alt={user.name} src={user.profileImage} sx={{ mr: 3 }} />
                 <AddBlog sx={{ color: "white" }} />
             </Box>
+            <InfiniteScroll
+                dataLength={blogs.length}
+                next={getAllBlogs}
+                hasMore={true}
+                loader={<BlogItemSkeleton />}
+                endMessage={
+                    <p style={{ textAlign: 'center' }}>
+                        <b>Yay! You have seen it all</b>
+                    </p>
+                }
+            />
             <Box sx={{ minWidth: 500 }} style={{ marginLeft: "1rem", marginRight: "1rem" }}>
                 {loading ?
                     (<React.Fragment>

@@ -2,6 +2,12 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const blogSchema = Schema({
+    _id: {
+        type: String,
+        default: function () {
+            return new mongoose.Types.ObjectId(); // Generate a new ObjectId by default
+        },
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
@@ -45,7 +51,7 @@ const blogSchema = Schema({
         type: Date,
         default: new Date()
     }
-});
+}, { _id: false });
 const Blog = mongoose.model('Blog', blogSchema);
 
 module.exports = Blog;

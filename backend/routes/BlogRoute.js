@@ -31,6 +31,7 @@ router.post('/createblog', fetchuser,
         // }
         try {
             const blog = await Blog.create({
+                _id: req._id,
                 title: req.body.title,
                 content: req.body.content,
                 tag: req.body.tag,

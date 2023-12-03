@@ -39,6 +39,7 @@ export default function AddBlog() {
             tag: '',
             contentImg: null
         })
+        handleClose();
     }
 
     return (

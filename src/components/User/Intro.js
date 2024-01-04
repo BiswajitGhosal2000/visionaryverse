@@ -9,19 +9,8 @@ import Typography from '@mui/material/Typography';
 import AuthContext from '../../context/auth/AuthContext';
 
 export default function Intro() {
-    const { getUser } = React.useContext(AuthContext);
-    const [user, setUser] = React.useState({ name: "" }) // Initialize user
-    React.useEffect(() => {
-
-        async function getUserDetails() {
-            const res = await getUser();
-            setUser({
-                name: res.name,
-            });
-        }
-
-        getUserDetails();
-    }, [getUser]);
+    const { user } = React.useContext(AuthContext);
+    console.log(user)
     return (
         <Box sx={{ minWidth: 200, maxWidth: 300, overflow: "scroll", maxHeight: "85vh" }}>
             <Card variant="outlined">
@@ -29,7 +18,7 @@ export default function Intro() {
                     <CardHeader title={user.name} subheader="" />
                     <CardContent>
                         <Typography sx={{ fontSize: 14 }} gutterBottom>
-                            Visionary Verse is a platform for bloggers to share their thoughts and ideas with the world.
+                            {user.role}
                         </Typography>
                         <Typography variant="h5" component="div">
 

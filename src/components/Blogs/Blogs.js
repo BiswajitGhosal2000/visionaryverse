@@ -12,34 +12,33 @@ import InfiniteScroll from "react-infinite-scroll-component";
 function Blogs() {
     const [blogs, setBlogs] = useState([]);
     const { getAllBlogs } = useContext(BlogContext);
-    const { getUser } = useContext(AuthContext);
-    const [user, setUser] = useState({ name: "", email: "", role: "", profileImage: null });
+    const { user } = useContext(AuthContext);
     const [loading, setLoading] = useState(true);
-    useEffect(() => {
-
-        async function getUserDetails() {
-            const res = await getUser();
-            setUser({
-                name: res.name,
-                email: res.email,
-                role: res.role,
-                profileImage: res.profileImage,
-            });
-        }
-
-        getUserDetails();
-    }, [getUser]);
-
-
+    const [page, setPage] = useState(1);
+    const [totalResult, setTotalResult] = useState(0);
     useEffect(() => {
         async function getBlogs() {
-            const result = await getAllBlogs();
-            setBlogs(result);
+            const result = await getAllBlogs(page, 10);
+            // console.log(result)
+            setBlogs(result.blogs);
             setLoading(false);
+            setTotalResult(result.totalResults);
         }
         getBlogs();
         // eslint-disable-next-line
-    }, [])
+    }, []);
+    const fetchMoreData = async () => {
+        try {
+            const result = await getAllBlogs(page + 1, 10);
+
+            setPage(page + 1);
+            setBlogs((prevBlogs) => [...prevBlogs, ...result.blogs]); // Concatenate arrays correctly
+            setTotalResult(result.totalResults);
+        } catch (error) {
+            console.error("Error fetching more data:", error);
+        }
+    };
+
     return (
         <Box sx={{ minWidth: 600, overflow: "scroll", maxHeight: "100vh" }} >
             <Box sx={{ minWidth: 500, bgcolor: "#1D2226", mx: 2, display: "flex", p: 2 }}>
@@ -48,27 +47,16 @@ function Blogs() {
             </Box>
             <InfiniteScroll
                 dataLength={blogs.length}
-                next={getAllBlogs}
-                hasMore={true}
-                loader={<BlogItemSkeleton />}
-                endMessage={
-                    <p style={{ textAlign: 'center' }}>
-                        <b>Yay! You have seen it all</b>
-                    </p>
-                }
-            />
-            <Box sx={{ minWidth: 500 }} style={{ marginLeft: "1rem", marginRight: "1rem" }}>
-                {loading ?
-                    (<React.Fragment>
-                        <BlogItemSkeleton />
-                        <BlogItemSkeleton />
-                        <BlogItemSkeleton />
-                    </React.Fragment>) :
-                    blogs.map((blog) => {
-                        return <BlogItem key={blog._id} blog={blog} loading={loading} />
-                    })
-                }
-            </Box>
+                next={fetchMoreData}
+                hasMore={blogs.length <= totalResult}
+                loader={<><BlogItemSkeleton /><BlogItemSkeleton /></>}
+            >
+                <Box sx={{ minWidth: 500 }} style={{ marginLeft: "1rem", marginRight: "1rem" }}>
+                    {blogs.map((blog) => (
+                        <BlogItem key={blog._id} blog={blog} loading={loading} />
+                    ))}
+                </Box>
+            </InfiniteScroll>
         </Box>
     );
 }

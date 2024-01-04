@@ -176,6 +176,11 @@ router.get('/getuserblogs', fetchuser, async (req, res) => {
 
 router.get('/getallblogs', async (req, res) => {
     try {
+        const page = parseInt(req.query.page); // Current page, default is 1
+        const limit = parseInt(req.query.limit); // Number of blogs per page, default is 10
+
+        const skip = (page - 1) * limit;
+
         const blogs = await Blog.aggregate([
             {
                 $lookup: {
@@ -188,12 +193,17 @@ router.get('/getallblogs', async (req, res) => {
             {
                 $unwind: '$user'
             }
-        ]).sort({ date: -1 });
+        ])
+            .sort({ date: -1 })
+            .skip(skip)
+            .limit(limit);
+        const totalBlogs = await Blog.countDocuments();
 
-        res.json({ blogs });
+        res.json({ blogs, currentPage: page, totalPages: Math.ceil(blogs.length / limit), totalResults: totalBlogs });
     } catch (error) {
         res.status(500).json({ error: 'An error occurred while fetching blogs.' });
     }
 });
+
 
 module.exports = router;

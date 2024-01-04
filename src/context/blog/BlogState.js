@@ -6,8 +6,8 @@ const BlogState = (props) => {
     const [blogs, setBlogs] = useState([])
 
     // Get all blogs
-    const getAllBlogs = async () => {
-        const url = `${host}/api/blogs/getallblogs`;
+    const getAllBlogs = async (page, limit) => {
+        const url = `${host}/api/blogs/getallblogs?page=${page}&limit=${limit}`;
         try {
             const response = await fetch(url, {
                 method: 'GET',
@@ -16,8 +16,7 @@ const BlogState = (props) => {
                 }
             });
             const json = await response.json();
-            // setBlogs(json.blogs);
-            return json.blogs;
+            return json;
         } catch (error) {
             console.error(error);
         }

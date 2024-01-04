@@ -5,7 +5,7 @@ import Skeleton from '@mui/material/Skeleton';
 
 function BlogItemSkeleton() {
     return (
-        <Card sx={{ maxWidth: 1000, bgcolor: "#1D2226", color: "white" }} style={{ marginTop: "1rem", width: "100%" }}>
+        <Card sx={{ maxWidth: 1000, bgcolor: "#1D2226", color: "white" }} style={{ margin: "1rem", width: "100%" }}>
             <CardHeader
                 avatar={<Skeleton animation="wave" variant="circular" width={40} height={40} />}
                 // action={ }

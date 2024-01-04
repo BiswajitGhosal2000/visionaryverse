@@ -3,6 +3,12 @@ import AuthContext from "./AuthContext";
 
 function AuthState(props) {
     const host = "http://127.0.0.1:5000"
+    const [user, setUser] = React.useState({
+        name: "",
+        email: "",
+        role: "",
+        profileImage: null
+    });
 
     const signup = async (name, email, password) => {
         const url = `${host}/api/auth/signup`
@@ -47,6 +53,8 @@ function AuthState(props) {
         });
         const json = await response.json();
         localStorage.setItem('token', json.authToken);
+        await getUser();
+        console.log("User Details:" + user)
         return json.success;
     }
     const getUser = async () => {
@@ -59,6 +67,12 @@ function AuthState(props) {
             }
         });
         const json = await response.json();
+        setUser({
+            name: json.name,
+            email: json.email,
+            role: json.role,
+            profileImage: json.profileImage
+        });
         return json;
     }
     const getUserById = async (id) => {
@@ -88,7 +102,7 @@ function AuthState(props) {
     }
 
     return (
-        <AuthContext.Provider value={{ login, signup, updateUser, getUser, getUserById, contactInfo }}>
+        <AuthContext.Provider value={{ user, login, signup, updateUser, getUser, getUserById, contactInfo }}>
             {props.children}
         </AuthContext.Provider>
     )

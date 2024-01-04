@@ -1,25 +1,11 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Container, Typography, Grid, Button } from '@mui/material';
 import AuthContext from '../../context/auth/AuthContext';
 
 
 const Profile = ({ credentials }) => {
-    const { getUser } = useContext(AuthContext);
-    const [user, setUser] = React.useState({ name: '', email: '', role: '', profileImage: null });
-    useEffect(() => {
-        async function getUserInfo() {
-            const response = await getUser();
-            setUser((prevState) => ({
-                ...prevState,
-                name: response.name,
-                role: response.role,
-                email: response.email,
-                profileImage: response.profileImage
-            }));
-        }
-        getUserInfo();
-        // eslint-disable-next-line
-    }, [user]);
+    const { user } = useContext(AuthContext);
+
     return (
         <Container maxWidth="lg" style={{ border: '1px solid #ccc', padding: '2rem', borderRadius: '5px', marginTop: '2rem' }} align="center">
             <Grid container spacing={3}>

@@ -34,6 +34,7 @@ function Login() {
             setSeverity('error');
         }
     };
+    document.title = 'Login || Blog';
 
     return (
         <Container maxWidth="sm" style={{ border: '1px solid #ccc', padding: '5rem', borderRadius: '5px', marginTop: '5rem' }}>

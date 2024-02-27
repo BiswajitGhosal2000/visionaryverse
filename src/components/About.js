@@ -6,6 +6,7 @@ import Team from './About/Team';
 import Contact from './About/Contact';
 
 function About() {
+    document.title = 'About Us || Blog';
 
     return (
         <Container sx={{ my: 5 }}>

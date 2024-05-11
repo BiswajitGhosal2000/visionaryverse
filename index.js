@@ -17,9 +17,7 @@ app.use("/api/contact", require("./routes/ContactRoute"));
 
 app.use('/uploads', express.static('uploads'));
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
+app.use('/', express.static('./frontend/build'));
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

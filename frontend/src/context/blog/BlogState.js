@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import BlogContext from "./BlogContext";
 
 const BlogState = (props) => {
-    const host = "http://127.0.0.1:5000"
+    const host = "https://visionaryverse.onrender.com"
     const [blogs, setBlogs] = useState([])
 
     // Get all blogs

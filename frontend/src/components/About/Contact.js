@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-// import InputLabel from '@mui/material/InputLabel';
-import TextField from '@mui/material/TextField';
-// import TextareaAutosize from '@mui/material/TextareaAutosize';
-import Button from '@mui/material/Button';
-import SendIcon from '@mui/icons-material/Send';
-import RestoreIcon from '@mui/icons-material/Restore';
-import { EmailRounded, LocationCityRounded, LocationOn, Phone } from '@mui/icons-material';
+import React, { useState } from "react";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+// import InputLabel from "@mui/material/InputLabel";
+import TextField from "@mui/material/TextField";
+// import TextareaAutosize from "@mui/material/TextareaAutosize";
+import Button from "@mui/material/Button";
+import SendIcon from "@mui/icons-material/Send";
+import RestoreIcon from "@mui/icons-material/Restore";
+import { EmailRounded, LocationCityRounded, LocationOn, Phone } from "@mui/icons-material";
 
 
 function Contact() {
     const [contactInfo, setContactInfo] = useState({
-        name: '',
-        email: '',
-        message: '',
+        name: "",
+        email: "",
+        message: "",
     });
 
     const handleChange = (e) => {
@@ -24,26 +24,26 @@ function Contact() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const url = 'http://127.0.0.1:5000/api/contact/contactinfo';
+        const url = "http://127.0.0.1:5000/api/contact/contactinfo";
         try {
             const response = await fetch(url, {
-                method: 'POST',
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
-                    // 'auth-token': localStorage.getItem('token')
+                    "Content-Type": "application/json",
+                    // "auth-token": localStorage.getItem("token")
                 },
                 body: JSON.stringify({ name: contactInfo.name, email: contactInfo.email, message: contactInfo.message })
             });
             const json = await response.json();
             console.log(json);
         } catch (error) {
-            console.log('Error at Contact.js');
+            console.log("Error at Contact.js");
             console.error(error);
         }
         setContactInfo({
-            name: '',
-            email: '',
-            message: '',
+            name: "",
+            email: "",
+            message: "",
         });
     };
 
@@ -102,7 +102,7 @@ function Contact() {
                         <TextField
                             id="message"
                             label="Message"
-                            name='message'
+                            name="message"
                             multiline
                             rows={3}
                             variant="standard"

@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Container, Typography, TablePagination, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Container, Typography, TablePagination, Table, TableHead, TableRow, TableCell, TableBody, Paper } from "@mui/material";
 
-import UserBlogItem from './UserBlogItem';
-import AddBlog from './AddBlog';
-import BlogContext from '../../context/blog/BlogContext';
-import UserBlogItemSkeleton from '../Skeletons/UserBlogItemSkeleton';
+import UserBlogItem from "./UserBlogItem";
+import AddBlog from "./AddBlog";
+import BlogContext from "../../context/blog/BlogContext";
+import UserBlogItemSkeleton from "../Skeletons/UserBlogItemSkeleton";
 
 function UserBlog() {
     const [blogs, setBlogs] = useState([]);
@@ -26,7 +26,7 @@ function UserBlog() {
     };
 
     useEffect(() => {
-        document.title = "User's Blog";
+        document.title = `User's Blog`;
         const fetchBlogs = async () => {
             try {
                 const fetchedBlogs = await getUserBlogs();
@@ -35,24 +35,24 @@ function UserBlog() {
                 console.error("Error fetching blogs:", error);
             }
         };
-        if (localStorage.getItem('token')) {
+        if (localStorage.getItem("token")) {
             fetchBlogs();
             setLoading(false);
         } else {
-            navigate('/login');
+            navigate("/login");
         }
     }, [navigate, getUserBlogs]);
 
     return (
         <Container>
-            <div className='d-flex justify-content-between my-3'>
+            <div className="d-flex justify-content-between my-3">
                 <Typography variant="h5" component="div">Your Blogs</Typography>
                 <AddBlog />
             </div>
             {loading ? (
                 <UserBlogItemSkeleton />
             ) : (
-                <Paper elevation={3} sx={{ width: '100%' }}>
+                <Paper elevation={3} sx={{ width: "100%" }}>
                     <Table>
                         <TableHead>
                             <TableRow>

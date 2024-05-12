@@ -1,5 +1,5 @@
-import React from 'react';
-import { Container, Grid, Typography, Card, CardMedia } from '@mui/material';
+import React from "react";
+import { Container, Grid, Typography, Card, CardMedia } from "@mui/material";
 
 
 function Vision() {

@@ -1,10 +1,10 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import { styled, Box } from '@mui/system';
-import { Modal as BaseModal } from '@mui/base/Modal';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { Menu, MenuItem, Typography } from '@mui/material';
+import * as React from "react";
+import PropTypes from "prop-types";
+import clsx from "clsx";
+import { styled, Box } from "@mui/system";
+import { Modal as BaseModal } from "@mui/base/Modal";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { Menu, MenuItem, Typography } from "@mui/material";
 
 export default function MoreOption(props) {
     const [open, setOpen] = React.useState(false);
@@ -21,7 +21,7 @@ export default function MoreOption(props) {
 
     return (
         <div>
-            <MoreVertIcon sx={{ color: 'white' }} onClick={handleOpen} />
+            <MoreVertIcon sx={{ color: "white" }} onClick={handleOpen} />
             <Modal
                 aria-labelledby="unstyled-modal-title"
                 aria-describedby="unstyled-modal-description"
@@ -31,17 +31,17 @@ export default function MoreOption(props) {
             >
                 <Box sx={style}>
                     <Menu
-                        sx={{ mt: '45px' }}
+                        sx={{ mt: "45px" }}
                         id="menu-appbar"
                         anchorEl={anchorElUser}
                         anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
+                            vertical: "top",
+                            horizontal: "right",
                         }}
                         keepMounted
                         transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
+                            vertical: "top",
+                            horizontal: "right",
                         }}
                         open={Boolean(anchorElUser)}
                         onClose={handleCloseUserMenu}
@@ -66,7 +66,7 @@ const Backdrop = React.forwardRef((props, ref) => {
     const { open, className, ...other } = props;
     return (
         <div
-            className={clsx({ 'MuiBackdrop-open': open }, className)}
+            className={clsx({ "MuiBackdrop-open": open }, className)}
             ref={ref}
             {...other}
         />
@@ -97,8 +97,8 @@ const StyledBackdrop = styled(Backdrop)`
 
 const style = (theme) => ({
     width: 600,
-    borderRadius: '12px',
-    padding: '16px 32px 24px 32px',
-    backgroundColor: theme.palette.mode === 'dark' ? 'white' : '#1D2226',
-    boxShadow: `0px 2px 24px ${theme.palette.mode === 'dark' ? '#000' : '#383838'}`,
+    borderRadius: "12px",
+    padding: "16px 32px 24px 32px",
+    backgroundColor: theme.palette.mode === "dark" ? "white" : "#1D2226",
+    boxShadow: `0px 2px 24px ${theme.palette.mode === "dark" ? "#000" : "#383838"}`,
 });

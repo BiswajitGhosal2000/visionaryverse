@@ -1,7 +1,7 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Button, Container, FormControl, InputLabel, MenuItem, Select, TextareaAutosize, TextField } from '@mui/material';
-import BlogContext from '../../context/blog/BlogContext';
+import React, { useState, useContext, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Button, Container, FormControl, InputLabel, MenuItem, Select, TextareaAutosize, TextField } from "@mui/material";
+import BlogContext from "../../context/blog/BlogContext";
 
 function UpdateBlog() {
     const { id } = useParams();
@@ -29,7 +29,7 @@ function UpdateBlog() {
         ublog.id = id;
         const res = await updateBlog(ublog);
         if (res) {
-            navigate('/userblog');
+            navigate("/userblog");
         }
     };
 
@@ -49,7 +49,7 @@ function UpdateBlog() {
 
     return (
         <Container maxWidth="md">
-            <h1 className='text-center'>Update Blog!</h1>
+            <h1 className="text-center">Update Blog!</h1>
             <form onSubmit={handleSubmit}>
                 <FormControl fullWidth margin="normal">
                     <TextField
@@ -84,7 +84,7 @@ function UpdateBlog() {
                     </Select>
                 </FormControl>
                 <InputLabel htmlFor="content">Content</InputLabel>
-                <FormControl fullWidth margin="normal" variant='standard'>
+                <FormControl fullWidth margin="normal" variant="standard">
                     <TextareaAutosize
                         minRows={6}
                         maxRows={15}
@@ -96,7 +96,7 @@ function UpdateBlog() {
                     />
                 </FormControl>
                 <FormControl fullWidth margin="normal">
-                    <img src={ublog.contentImg} alt='Blog' />
+                    <img src={ublog.contentImg} alt="Blog" />
                 </FormControl>
                 <FormControl fullWidth margin="normal">
                     <TextField

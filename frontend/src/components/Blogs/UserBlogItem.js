@@ -1,12 +1,12 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import EditIcon from '@mui/icons-material/Edit';
+import React from "react";
+import { Link } from "react-router-dom";
+import EditIcon from "@mui/icons-material/Edit";
 import {
     TableCell,
     TableRow,
     Link as MUILink,
     Button,
-} from '@mui/material';
+} from "@mui/material";
 
 export default function UserBlogItem(props) {
     const { serial, blog } = props;

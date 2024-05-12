@@ -1,13 +1,13 @@
-import React, { useContext } from 'react';
-import { Container, Typography, Grid, Button } from '@mui/material';
-import AuthContext from '../../context/auth/AuthContext';
+import React, { useContext } from "react";
+import { Container, Typography, Grid, Button } from "@mui/material";
+import AuthContext from "../../context/auth/AuthContext";
 
 
 const Profile = ({ credentials }) => {
     const { user } = useContext(AuthContext);
 
     return (
-        <Container maxWidth="lg" style={{ border: '1px solid #ccc', padding: '2rem', borderRadius: '5px', marginTop: '2rem' }} align="center">
+        <Container maxWidth="lg" style={{ border: "1px solid #ccc", padding: "2rem", borderRadius: "5px", marginTop: "2rem" }} align="center">
             <Grid container spacing={3}>
                 {/* Left Column for Image */}
                 <Grid item xs={12} md={6}>
@@ -33,7 +33,7 @@ const Profile = ({ credentials }) => {
                             </Typography>
                         </Grid>
                         <Grid item xs={12}>
-                            <Button variant="contained" color="primary" style={{ marginTop: '1rem' }} href="/editprofile">
+                            <Button variant="contained" color="primary" style={{ marginTop: "1rem" }} href="/editprofile">
                                 Edit Profile
                             </Button>
                         </Grid>

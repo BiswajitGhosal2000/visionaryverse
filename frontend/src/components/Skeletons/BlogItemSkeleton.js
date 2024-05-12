@@ -1,6 +1,6 @@
-import React from 'react';
-import { Card, CardHeader, CardContent, CardActions } from '@mui/material';
-import Skeleton from '@mui/material/Skeleton';
+import React from "react";
+import { Card, CardHeader, CardContent, CardActions } from "@mui/material";
+import Skeleton from "@mui/material/Skeleton";
 
 
 function BlogItemSkeleton() {
@@ -19,7 +19,7 @@ function BlogItemSkeleton() {
                 </React.Fragment>
             </CardContent>
             <Skeleton sx={{ height: 300 }} animation="wave" variant="rectangular" color="white" />
-            <CardActions sx={{ display: 'flex', justifyContent: 'space-around' }}>
+            <CardActions sx={{ display: "flex", justifyContent: "space-around" }}>
                 <Skeleton animation="wave" height={50} width={60} style={{ marginBottom: 5 }} />
                 <Skeleton animation="wave" height={50} width={60} style={{ marginBottom: 5 }} />
                 <Skeleton animation="wave" height={50} width={60} style={{ marginBottom: 5 }} />

@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import AuthContext from '../../context/auth/AuthContext';
-import { Button, Container, Grid, TextField, Typography } from '@mui/material';
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import AuthContext from "../../context/auth/AuthContext";
+import { Button, Container, Grid, TextField, Typography } from "@mui/material";
 
 function Signup() {
     const { signup } = useContext(AuthContext);
-    const [credentials, setCredentials] = useState({ name: '', email: '', password: '', cpassword: '' });
+    const [credentials, setCredentials] = useState({ name: "", email: "", password: "", cpassword: "" });
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -15,16 +15,16 @@ function Signup() {
     const signUP = (e) => {
         e.preventDefault();
         signup(credentials.name, credentials.email, credentials.password);
-        setCredentials({ name: '', email: '', password: '', cpassword: '' });
-        navigate('/');
+        setCredentials({ name: "", email: "", password: "", cpassword: "" });
+        navigate("/");
     }
 
     useEffect(() => {
-        document.title = 'SignUp || Visionary Verse';
+        document.title = "SignUp || Visionary Verse";
     }, []);
 
     return (
-        <Container maxWidth="sm" style={{ border: '1px solid #ccc', padding: '5rem', borderRadius: '5px', marginTop: '5rem' }} align="center">
+        <Container maxWidth="sm" style={{ border: "1px solid #ccc", padding: "5rem", borderRadius: "5px", marginTop: "5rem" }} align="center">
             <Typography variant="h4" align="center" color="primary" gutterBottom>
                 SignUp!
             </Typography>
@@ -73,7 +73,7 @@ function Signup() {
                             onChange={handleChange}
                             required
                             error={credentials.password !== credentials.cpassword}
-                            helperText={credentials.password !== credentials.cpassword ? 'Password does not match' : ''}
+                            helperText={credentials.password !== credentials.cpassword ? "Password does not match" : ""}
                         />
                     </Grid>
                     <Grid item xs={12}>

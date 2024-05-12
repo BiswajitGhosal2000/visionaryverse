@@ -23,7 +23,7 @@ router.post('/createblog', fetchuser,
     upload.single('contentImg'),
     async (req, res) => {
         const uploadedFile = req.file;
-        console.log(req.body.content);
+        // console.log(req.body.content);
         // const errors = validationResult(req);
         // if (!errors.isEmpty()) {
         //     blogLogger.error(errors.array());
@@ -55,6 +55,7 @@ router.post('/createblog', fetchuser,
 router.get('/viewblog/:id', async (req, res) => {
     try {
         const blog = await Blog.findById(req.params.id);
+        console.log(blog)
         if (!blog) {
             return res.status(404).send("Not Found");
         }
@@ -201,7 +202,7 @@ router.get('/getallblogs', async (req, res) => {
 
         res.json({ blogs, currentPage: page, totalPages: Math.ceil(blogs.length / limit), totalResults: totalBlogs });
     } catch (error) {
-        res.status(500).json({ error: 'An error occurred while fetching blogs.' });
+        res.status(500).json({ error: 'An error occurred while fetching blogs.' + error });
     }
 });
 

@@ -1,17 +1,17 @@
-import React, { useState, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Button, Container, TextField, Typography } from '@mui/material';
-import AuthContext from '../../context/auth/AuthContext';
-import Popup from '../User/Popup';
+import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Button, Container, TextField, Typography } from "@mui/material";
+import AuthContext from "../../context/auth/AuthContext";
+import Popup from "../User/Popup";
 
 function Login() {
     const [credential, setCredential] = useState({
-        email: '',
-        password: '',
+        email: "",
+        password: "",
     });
     const [open, setOpen] = useState(false);
-    const [severity, setSeverity] = useState('success');
-    const [message, setMessage] = useState('');
+    const [severity, setSeverity] = useState("success");
+    const [message, setMessage] = useState("");
     const navigate = useNavigate();
     const { login } = useContext(AuthContext);
 
@@ -25,19 +25,19 @@ function Login() {
         const success = await login(credential.email, credential.password);
         if (success) {
             setOpen(true);
-            setSeverity('success');
-            setMessage('Login successful');
-            navigate('/');
+            setSeverity("success");
+            setMessage("Login successful");
+            navigate("/");
         } else {
             setOpen(true);
-            setMessage('Login failed');
-            setSeverity('error');
+            setMessage("Login failed");
+            setSeverity("error");
         }
     };
-    document.title = 'Login || Blog';
+    document.title = "Login || Blog";
 
     return (
-        <Container maxWidth="sm" style={{ border: '1px solid #ccc', padding: '5rem', borderRadius: '5px', marginTop: '5rem' }}>
+        <Container maxWidth="sm" style={{ border: "1px solid #ccc", padding: "5rem", borderRadius: "5px", marginTop: "5rem" }}>
             <Popup severity={severity} open={open} message={message} />
             <Typography variant="h4" align="center" color="primary">
                 Login!
@@ -49,7 +49,7 @@ function Login() {
                     Submit
                 </Button>
             </form>
-            <Typography variant="body1" align="center" style={{ marginTop: '1rem' }}>
+            <Typography variant="body1" align="center" style={{ marginTop: "1rem" }}>
                 Create a new account <Link to="/signup">Signup</Link>
             </Typography>
         </Container>

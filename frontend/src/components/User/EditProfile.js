@@ -1,13 +1,13 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { TextField, Button, Container, Typography, Grid, Input } from '@mui/material';
-import AuthContext from '../../context/auth/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from "react";
+import { TextField, Button, Container, Typography, Grid, Input } from "@mui/material";
+import AuthContext from "../../context/auth/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 
 const Profile = () => {
     const { updateUser, getUser } = useContext(AuthContext);
     const navigate = useNavigate();
-    const [credentials, setCredentials] = useState({ name: '', email: '', role: '', profileImage: null });
+    const [credentials, setCredentials] = useState({ name: "", email: "", role: "", profileImage: null });
 
     const handleChange = (e) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -20,7 +20,7 @@ const Profile = () => {
     const updateUserInfo = (e) => {
         e.preventDefault();
         updateUser(credentials);
-        navigate('/userProfile')
+        navigate("/userProfile")
     }
     useEffect(() => {
         async function getUserInfo() {
@@ -38,8 +38,8 @@ const Profile = () => {
     }, []);
 
     return (
-        <Container maxWidth="sm" style={{ border: '1px solid #ccc', padding: '5rem', borderRadius: '5px', marginTop: '2rem' }} align="center">
-            <img src={credentials.profileImage} alt="profile" style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
+        <Container maxWidth="sm" style={{ border: "1px solid #ccc", padding: "5rem", borderRadius: "5px", marginTop: "2rem" }} align="center">
+            <img src={credentials.profileImage} alt="profile" style={{ width: "100px", height: "100px", borderRadius: "50%" }} />
             <Typography variant="h4" align="center" color="primary" gutterBottom>
                 Profile
             </Typography>
@@ -58,7 +58,7 @@ const Profile = () => {
                         <Input label="profileImage" name="profileImage" fullWidth type="file" onChange={handleImageChange} />
                     </Grid>
                     <Grid item xs={6}>
-                        <Button variant="contained" color="error" fullWidth onClick={() => navigate('/userProfile')}>
+                        <Button variant="contained" color="error" fullWidth onClick={() => navigate("/userProfile")}>
                             Cancel
                         </Button>
                     </Grid>

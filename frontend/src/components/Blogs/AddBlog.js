@@ -1,10 +1,10 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import { styled, Box } from '@mui/system';
-import { Modal as BaseModal } from '@mui/base/Modal';
+import * as React from "react";
+import PropTypes from "prop-types";
+import clsx from "clsx";
+import { styled, Box } from "@mui/system";
+import { Modal as BaseModal } from "@mui/base/Modal";
 
-import BlogContext from '../../context/blog/BlogContext';
+import BlogContext from "../../context/blog/BlogContext";
 
 
 export default function AddBlog() {
@@ -13,9 +13,9 @@ export default function AddBlog() {
     const handleClose = () => setOpen(false);
 
     const [blog, setBlog] = React.useState({
-        title: '',
-        content: '',
-        tag: 'General',
+        title: "",
+        content: "",
+        tag: "General",
         contentImg: null
     });
     const { createBlog } = React.useContext(BlogContext);
@@ -34,9 +34,9 @@ export default function AddBlog() {
         await createBlog(blog);
         alert("Blog Created Successfully");
         setBlog({
-            title: '',
-            content: '',
-            tag: '',
+            title: "",
+            content: "",
+            tag: "",
             contentImg: null
         })
         handleClose();
@@ -59,14 +59,14 @@ export default function AddBlog() {
                 <Box sx={style}>
                     <h2 id="unstyled-modal-title">Add New Blog</h2>
                     {/* <p id="unstyled-modal-description">Aliquid amet deserunt earum!</p> */}
-                    <form onSubmit={handleSubmit} className='row'>
+                    <form onSubmit={handleSubmit} className="row">
                         <div className="mb-3 col-6">
                             <label htmlFor="title" className="form-label">Title</label>
                             <input type="text" className="form-control" id="title" name="title" aria-describedby="emailHelp" onChange={handleChange} required value={blog.title} />
                         </div>
                         <div className="mb-3 col-6">
                             <label htmlFor="tag" className="form-label">Tag</label>
-                            <select className="form-select" aria-label="Default select example" id='tag' name='tag' onChange={handleChange} required value={blog.tag}>
+                            <select className="form-select" aria-label="Default select example" id="tag" name="tag" onChange={handleChange} required value={blog.tag}>
                                 <option value="General">Select Tag Here</option>
                                 <option value="Sports">Sports</option>
                                 <option value="Technology">Technology</option>
@@ -82,7 +82,7 @@ export default function AddBlog() {
                         </div>
                         <div className="mb-3">
                             <label htmlFor="content" className="form-label">Content</label>
-                            <textarea type="text" className="form-control" rows='8' id="content" name='content' onChange={handleChange} required value={blog.content} />
+                            <textarea type="text" className="form-control" rows="8" id="content" name="content" onChange={handleChange} required value={blog.content} />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="formFile" className="form-label">Upload Image</label>
@@ -100,7 +100,7 @@ const Backdrop = React.forwardRef((props, ref) => {
     const { open, className, ...other } = props;
     return (
         <div
-            className={clsx({ 'MuiBackdrop-open': open }, className)}
+            className={clsx({ "MuiBackdrop-open": open }, className)}
             ref={ref}
             {...other}
         />
@@ -113,22 +113,22 @@ Backdrop.propTypes = {
 };
 
 const blue = {
-    200: '#99CCF3',
-    400: '#3399FF',
-    500: '#007FFF',
+    200: "#99CCF3",
+    400: "#3399FF",
+    500: "#007FFF",
 };
 
 const grey = {
-    50: '#f6f8fa',
-    100: '#eaeef2',
-    200: '#d0d7de',
-    300: '#afb8c1',
-    400: '#8c959f',
-    500: '#6e7781',
-    600: '#57606a',
-    700: '#424a53',
-    800: '#32383f',
-    900: '#24292f',
+    50: "#f6f8fa",
+    100: "#eaeef2",
+    200: "#d0d7de",
+    300: "#afb8c1",
+    400: "#8c959f",
+    500: "#6e7781",
+    600: "#57606a",
+    700: "#424a53",
+    800: "#32383f",
+    900: "#24292f",
 };
 
 const Modal = styled(BaseModal)`
@@ -150,13 +150,13 @@ const StyledBackdrop = styled(Backdrop)`
 
 const style = (theme) => ({
     width: 600,
-    borderRadius: '12px',
-    padding: '16px 32px 24px 32px',
-    backgroundColor: theme.palette.mode === 'dark' ? 'black' : 'white',
-    boxShadow: `0px 2px 24px ${theme.palette.mode === 'dark' ? '#000' : '#383838'}`,
+    borderRadius: "12px",
+    padding: "16px 32px 24px 32px",
+    backgroundColor: theme.palette.mode === "dark" ? "black" : "white",
+    boxShadow: `0px 2px 24px ${theme.palette.mode === "dark" ? "#000" : "#383838"}`,
 });
 
-const TriggerButton = styled('button')(
+const TriggerButton = styled("button")(
     ({ theme }) => `
   font-family: IBM Plex Sans, sans-serif;
   font-size: 0.875rem;
@@ -167,18 +167,18 @@ const TriggerButton = styled('button')(
   padding: 6px 12px;
   line-height: 1.5;
   background: transparent;
-  border: 1px solid ${theme.palette.mode === 'dark' ? grey[800] : grey[200]};
-  color: ${theme.palette.mode === 'dark' ? grey[100] : grey[900]};
+  border: 1px solid ${theme.palette.mode === "dark" ? grey[800] : grey[200]};
+  color: ${theme.palette.mode === "dark" ? grey[100] : grey[900]};
 
   &:hover {
-    color: ${theme.palette.mode === 'dark' ? grey[100] : grey[900]};
-    background: ${theme.palette.mode === 'dark' ? grey[800] : grey[50]};
-    border-color: ${theme.palette.mode === 'dark' ? grey[600] : grey[300]};
+    color: ${theme.palette.mode === "dark" ? grey[100] : grey[900]};
+    background: ${theme.palette.mode === "dark" ? grey[800] : grey[50]};
+    border-color: ${theme.palette.mode === "dark" ? grey[600] : grey[300]};
   }
 
   &:focus-visible {
     border-color: ${blue[400]};
-    outline: 3px solid ${theme.palette.mode === 'dark' ? blue[500] : blue[200]};
+    outline: 3px solid ${theme.palette.mode === "dark" ? blue[500] : blue[200]};
   }
   `,
 );

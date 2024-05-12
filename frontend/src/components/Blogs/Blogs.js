@@ -1,12 +1,12 @@
-import * as React from 'react';
-import { useContext, useEffect, useState } from 'react'
-import BlogItem from './BlogItem';
-import BlogContext from '../../context/blog/BlogContext';
-import { Box } from '@mui/system';
-import AddBlog from './AddBlog';
-import { Avatar } from '@mui/material';
-import AuthContext from '../../context/auth/AuthContext';
-import BlogItemSkeleton from '../Skeletons/BlogItemSkeleton';
+import * as React from "react";
+import { useContext, useEffect, useState } from "react"
+import BlogItem from "./BlogItem";
+import BlogContext from "../../context/blog/BlogContext";
+import { Box } from "@mui/system";
+import AddBlog from "./AddBlog";
+import { Avatar } from "@mui/material";
+import AuthContext from "../../context/auth/AuthContext";
+import BlogItemSkeleton from "../Skeletons/BlogItemSkeleton";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 function Blogs() {

@@ -1,14 +1,14 @@
-import * as React from 'react';
-import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Tooltip, MenuItem, Divider } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+import * as React from "react";
+import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Tooltip, MenuItem, Divider } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 
-import AuthContext from '../context/auth/AuthContext';
-import logo from '../logo.png';
-import { Logout } from '@mui/icons-material';
-import BookIcon from '@mui/icons-material/Book';
-import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
-import ReadMoreIcon from '@mui/icons-material/ReadMore';
-import { useNavigate } from 'react-router-dom';
+import AuthContext from "../context/auth/AuthContext";
+import logo from "../logo.png";
+import { Logout } from "@mui/icons-material";
+import BookIcon from "@mui/icons-material/Book";
+import DynamicFeedIcon from "@mui/icons-material/DynamicFeed";
+import ReadMoreIcon from "@mui/icons-material/ReadMore";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -33,14 +33,14 @@ function Navbar() {
         setAnchorElUser(null);
     };
     const logout = () => {
-        localStorage.removeItem('token');
+        localStorage.removeItem("token");
         window.location.reload();
         setUserPresent(false);
     };
 
 
     React.useEffect(() => {
-        const isUserPresent = localStorage.getItem('token') !== null;
+        const isUserPresent = localStorage.getItem("token") !== null;
 
         // Update userPresent only if it has changed
         if (userPresent !== isUserPresent) {
@@ -61,51 +61,51 @@ function Navbar() {
                     <Toolbar disableGutters>
                         <Typography variant="h5" noWrap
                             sx={{
-                                mr: 2, display: { xs: 'none', md: 'flex' }, fontFamily: 'monospace', fontWeight: 700,
-                                letterSpacing: '0rem', textDecoration: 'none',
+                                mr: 2, display: { xs: "none", md: "flex" }, fontFamily: "monospace", fontWeight: 700,
+                                letterSpacing: "0rem", textDecoration: "none",
                             }}
                         >
                             <img src={logo} alt="" width={30} height={30} />
                         </Typography>
 
-                        <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                        <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
                             <IconButton size="large" aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleOpenNavMenu}>
                                 <MenuIcon />
                             </IconButton>
                             <Menu id="menu-appbar" anchorEl={anchorElNav}
                                 anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'left',
+                                    vertical: "bottom",
+                                    horizontal: "left",
                                 }}
                                 keepMounted
                                 transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'left',
+                                    vertical: "top",
+                                    horizontal: "left",
                                 }}
                                 open={Boolean(anchorElNav)}
                                 onClose={handleCloseNavMenu}
-                                sx={{ display: { xs: 'block', md: 'none' }, }}
+                                sx={{ display: { xs: "block", md: "none" }, }}
                             >
                                 <MenuItem >
-                                    <IconButton color="inherit" component="a" onClick={() => navigate('/')} >
+                                    <IconButton color="inherit" component="a" onClick={() => navigate("/")} >
                                         <DynamicFeedIcon />
-                                        <Typography sx={{ color: 'black', textDecoration: "none", mx: 1, }} textAlign="center" variant="body1" noWrap>
+                                        <Typography sx={{ color: "black", textDecoration: "none", mx: 1, }} textAlign="center" variant="body1" noWrap>
                                             Feed
                                         </Typography>
                                     </IconButton>
                                 </MenuItem>
                                 <MenuItem >
-                                    <IconButton color="inherit" component="a" onClick={() => navigate('/userblog')}>
+                                    <IconButton color="inherit" component="a" onClick={() => navigate("/userblog")}>
                                         <BookIcon />
-                                        <Typography sx={{ color: 'black', textDecoration: "none", mx: 1 }} textAlign="center" variant="body1" noWrap>
+                                        <Typography sx={{ color: "black", textDecoration: "none", mx: 1 }} textAlign="center" variant="body1" noWrap>
                                             My Blog
                                         </Typography>
                                     </IconButton>
                                 </MenuItem>
                                 <MenuItem >
-                                    <IconButton color="inherit" component="a" onClick={() => navigate('/about')}>
+                                    <IconButton color="inherit" component="a" onClick={() => navigate("/about")}>
                                         <ReadMoreIcon />
-                                        <Typography sx={{ color: 'black', textDecoration: "none", mx: 1 }} textAlign="center" variant="body1" noWrap>
+                                        <Typography sx={{ color: "black", textDecoration: "none", mx: 1 }} textAlign="center" variant="body1" noWrap>
                                             About
                                         </Typography>
                                     </IconButton>
@@ -121,32 +121,32 @@ function Navbar() {
                             href="#app-bar-with-responsive-menu"
                             sx={{
                                 mr: 2,
-                                display: { xs: 'flex', md: 'none' },
+                                display: { xs: "flex", md: "none" },
                                 flexGrow: 1,
-                                fontFamily: 'monospace',
+                                fontFamily: "monospace",
                                 fontWeight: 200,
-                                letterSpacing: '0rem',
-                                textDecoration: 'none',
+                                letterSpacing: "0rem",
+                                textDecoration: "none",
                             }}
                         >
                             <img src={logo} alt="" width={30} height={30} />
                         </Typography>
-                        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                            <IconButton color="inherit" component="a" onClick={() => navigate('/')}>
+                        <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+                            <IconButton color="inherit" component="a" onClick={() => navigate("/")}>
                                 <DynamicFeedIcon />
-                                <Typography sx={{ color: 'white', textDecoration: "none", mx: 1 }} textAlign="center" variant="body1" noWrap>
+                                <Typography sx={{ color: "white", textDecoration: "none", mx: 1 }} textAlign="center" variant="body1" noWrap>
                                     Feed
                                 </Typography>
                             </IconButton>
-                            <IconButton color="inherit" component="a" onClick={() => navigate('/userblog')} >
+                            <IconButton color="inherit" component="a" onClick={() => navigate("/userblog")} >
                                 <BookIcon />
-                                <Typography sx={{ color: 'white', textDecoration: "none", mx: 1 }} textAlign="center" variant="body1" noWrap>
+                                <Typography sx={{ color: "white", textDecoration: "none", mx: 1 }} textAlign="center" variant="body1" noWrap>
                                     My Blog
                                 </Typography>
                             </IconButton>
-                            <IconButton color="inherit" component="a" onClick={() => navigate('/about')}>
+                            <IconButton color="inherit" component="a" onClick={() => navigate("/about")}>
                                 <ReadMoreIcon />
-                                <Typography sx={{ color: 'white', textDecoration: "none", mx: 1 }} textAlign="center" variant="body1" noWrap>
+                                <Typography sx={{ color: "white", textDecoration: "none", mx: 1 }} textAlign="center" variant="body1" noWrap>
                                     About
                                 </Typography>
                             </IconButton>
@@ -159,17 +159,17 @@ function Navbar() {
                                 </IconButton>
                             </Tooltip>
                             <Menu
-                                sx={{ mt: '45px' }}
+                                sx={{ mt: "45px" }}
                                 id="menu-appbar"
                                 anchorEl={anchorElUser}
                                 anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
+                                    vertical: "top",
+                                    horizontal: "right",
                                 }}
                                 keepMounted
                                 transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
+                                    vertical: "top",
+                                    horizontal: "right",
                                 }}
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
@@ -178,7 +178,7 @@ function Navbar() {
                                     <Typography textAlign="center" >{user.name}</Typography>
                                 </MenuItem>
                                 <MenuItem >
-                                    <Typography textAlign="center" onClick={() => { navigate('/userProfile') }}>View Profile</Typography>
+                                    <Typography textAlign="center" onClick={() => { navigate("/userProfile") }}>View Profile</Typography>
                                 </MenuItem>
                                 <Divider />
                                 <MenuItem onClick={logout}>

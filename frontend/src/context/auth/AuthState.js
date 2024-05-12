@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import AuthContext from "./AuthContext";
 
 function AuthState(props) {
@@ -15,26 +15,26 @@ function AuthState(props) {
         const response = await fetch(url, {
             method: "POST",
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({ name, email, password })
         });
         const json = await response.json();
-        localStorage.setItem('token', json.authToken);
+        localStorage.setItem("token", json.authToken);
         return json.success;
     }
 
     const updateUser = async (user) => {
         const url = `${host}/api/auth/updateuser`
         const formData = new FormData();
-        formData.append('name', user.name);
-        formData.append('email', user.email);
-        formData.append('role', user.role)
-        formData.append('profileImage', user.profileImage);
+        formData.append("name", user.name);
+        formData.append("email", user.email);
+        formData.append("role", user.role)
+        formData.append("profileImage", user.profileImage);
         const response = await fetch(url, {
             method: "POST",
             headers: {
-                "auth-token": localStorage.getItem('token')
+                "auth-token": localStorage.getItem("token")
             },
             body: formData
         });
@@ -47,12 +47,12 @@ function AuthState(props) {
         const response = await fetch(url, {
             method: "POST",
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({ email, password })
         });
         const json = await response.json();
-        localStorage.setItem('token', json.authToken);
+        localStorage.setItem("token", json.authToken);
         await getUser();
         console.log("User Details:" + user)
         return json.success;
@@ -62,8 +62,8 @@ function AuthState(props) {
         const response = await fetch(url, {
             method: "GET",
             headers: {
-                'Content-Type': 'application/json',
-                "auth-token": localStorage.getItem('token')
+                "Content-Type": "application/json",
+                "auth-token": localStorage.getItem("token")
             }
         });
         const json = await response.json();
@@ -80,7 +80,7 @@ function AuthState(props) {
         const response = await fetch(url, {
             method: "POST",
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({ id })
         });
@@ -93,7 +93,7 @@ function AuthState(props) {
         const response = await fetch(url, {
             method: "POST",
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({ email })
         });

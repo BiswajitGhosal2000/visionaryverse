@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import BlogContext from './BlogContext';
+import React, { useState } from "react";
+import BlogContext from "./BlogContext";
 
 const BlogState = (props) => {
     const host = "http://127.0.0.1:5000"
@@ -10,9 +10,9 @@ const BlogState = (props) => {
         const url = `${host}/api/blogs/getallblogs?page=${page}&limit=${limit}`;
         try {
             const response = await fetch(url, {
-                method: 'GET',
+                method: "GET",
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json"
                 }
             });
             const json = await response.json();
@@ -26,10 +26,10 @@ const BlogState = (props) => {
         const url = `${host}/api/blogs/getuserblogs`;
         try {
             const response = await fetch(url, {
-                method: 'GET',
+                method: "GET",
                 headers: {
-                    'Content-Type': 'application/json',
-                    'auth-token': localStorage.getItem('token')
+                    "Content-Type": "application/json",
+                    "auth-token": localStorage.getItem("token")
                 }
             });
             const json = await response.json();
@@ -44,9 +44,9 @@ const BlogState = (props) => {
         const url = `${host}/api/blogs/viewblog/${id}`;
         try {
             const response = await fetch(url, {
-                method: 'GET',
+                method: "GET",
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json"
                 }
             });
             const json = await response.json();
@@ -60,16 +60,16 @@ const BlogState = (props) => {
     const createBlog = async (blog) => {
         const url = `${host}/api/blogs/createblog`;
         const formData = new FormData();
-        formData.append('title', blog.title);
-        formData.append('content', blog.content);
-        formData.append('tag', blog.tag);
-        formData.append('contentImg', blog.contentImg);
-        // formData.append('date', Date.now());
+        formData.append("title", blog.title);
+        formData.append("content", blog.content);
+        formData.append("tag", blog.tag);
+        formData.append("contentImg", blog.contentImg);
+        // formData.append("date", Date.now());
         try {
             const response = await fetch(url, {
-                method: 'POST',
+                method: "POST",
                 headers: {
-                    'auth-token': localStorage.getItem('token')
+                    "auth-token": localStorage.getItem("token")
                 },
                 body: formData
             });
@@ -86,16 +86,16 @@ const BlogState = (props) => {
     const updateBlog = async (blog) => {
         const url = `${host}/api/blogs/updateblog/${blog.id}`;
         const formData = new FormData();
-        formData.append('title', blog.title);
-        formData.append('content', blog.content);
-        formData.append('tag', blog.tag);
-        formData.append('contentImg', blog.contentImg);
-        // formData.append('date', Date.now());
+        formData.append("title", blog.title);
+        formData.append("content", blog.content);
+        formData.append("tag", blog.tag);
+        formData.append("contentImg", blog.contentImg);
+        // formData.append("date", Date.now());
         try {
             const response = await fetch(url, {
-                method: 'PUT',
+                method: "PUT",
                 headers: {
-                    'auth-token': localStorage.getItem('token')
+                    "auth-token": localStorage.getItem("token")
                 },
                 body: formData
             });
@@ -113,10 +113,10 @@ const BlogState = (props) => {
         const url = `${host}/api/blogs/addcomment/${blogId}`;
         try {
             const response = await fetch(url, {
-                method: 'PUT',
+                method: "PUT",
                 headers: {
-                    'Content-Type': 'application/json',
-                    'auth-token': localStorage.getItem('token')
+                    "Content-Type": "application/json",
+                    "auth-token": localStorage.getItem("token")
                 },
                 body: JSON.stringify({ comment })
             });

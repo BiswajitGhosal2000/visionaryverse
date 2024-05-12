@@ -1,5 +1,5 @@
-import React from 'react';
-import { Snackbar, Alert } from '@mui/material';
+import React from "react";
+import { Snackbar, Alert } from "@mui/material";
 
 function Popup(props) {
     const [isOpen, setOpen] = React.useState(true);
@@ -7,14 +7,14 @@ function Popup(props) {
         setOpen(props.open)
     }, [props.open])
     const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
+        if (reason === "clickaway") {
             return;
         }
         setOpen(false);
     };
     return (
         <Snackbar open={isOpen} autoHideDuration={6000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity={props.severity} sx={{ width: '100%' }}>
+            <Alert onClose={handleClose} severity={props.severity} sx={{ width: "100%" }}>
                 {props.message}
             </Alert>
         </Snackbar>

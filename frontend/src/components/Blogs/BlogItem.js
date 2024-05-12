@@ -1,32 +1,32 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import CommentIcon from '@mui/icons-material/Comment';
-import ShareBlog from './ShareBlog';
-import MoreOption from './MoreOption';
-import Comment from './Comment';
-import { useContext } from 'react';
-import BlogContext from '../../context/blog/BlogContext';
+import * as React from "react";
+import { styled } from "@mui/material/styles";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import CardMedia from "@mui/material/CardMedia";
+import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
+import Collapse from "@mui/material/Collapse";
+import Avatar from "@mui/material/Avatar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import { red } from "@mui/material/colors";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import CommentIcon from "@mui/icons-material/Comment";
+import ShareBlog from "./ShareBlog";
+import MoreOption from "./MoreOption";
+import Comment from "./Comment";
+import { useContext } from "react";
+import BlogContext from "../../context/blog/BlogContext";
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
     return <IconButton {...other} />;
 })(({ theme, expand }) => ({
-    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
+    transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
         duration: theme.transitions.duration.shortest,
     }),
 }));
@@ -73,18 +73,18 @@ export default function BlogItem(props) {
                 }
                 title={author}
                 subheader={
-                    <Typography sx={{ display: 'inline' }} component="span" variant="body2" color="grey" >
+                    <Typography sx={{ display: "inline" }} component="span" variant="body2" color="grey" >
                         Published on: {blog.date}
                     </Typography>
                 }
             />
             <CardContent>
                 <Typography variant="body2" color="inherit">
-                    {blog.contentImg ? blog.content.substring(0, 100) : blog.content.substring(0, 500)}<Link to={`/viewblog/${blog._id}`} aria-label='Read the full blog using this button'>Read Full Blog</Link>
+                    {blog.contentImg ? blog.content.substring(0, 100) : blog.content.substring(0, 500)}<Link to={`/viewblog/${blog._id}`} aria-label="Read the full blog using this button">Read Full Blog</Link>
                 </Typography>
             </CardContent>
             <CardMedia component="img" height="300" image={blog.contentImg} hidden={blog.contentImg ? false : true} alt={blog.title.substring(0, 50)} />
-            <CardActions sx={{ display: 'flex', justifyContent: 'space-around' }}>
+            <CardActions sx={{ display: "flex", justifyContent: "space-around" }}>
                 <IconButton aria-label="add to favorites">
                     <FavoriteIcon sx={{ color: "white" }} />
                 </IconButton>

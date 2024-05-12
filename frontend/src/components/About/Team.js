@@ -1,15 +1,15 @@
-import React from 'react';
-import { Container, Grid, Card, CardContent, Typography, CardMedia, styled } from '@mui/material';
+import React from "react";
+import { Container, Grid, Card, CardContent, Typography, CardMedia, styled } from "@mui/material";
 
-const classes = styled('div')({
+const classes = styled("div")({
     root: {
         marginTop: "20px",
     },
     card: {
-        display: 'flex',
+        display: "flex",
     },
     cardContent: {
-        flex: '1',
+        flex: "1",
     },
     cardMedia: {
         width: 150,

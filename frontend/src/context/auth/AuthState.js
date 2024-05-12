@@ -2,7 +2,7 @@ import React from "react";
 import AuthContext from "./AuthContext";
 
 function AuthState(props) {
-    const host = "http://127.0.0.1:5000"
+    const host = "https://visionaryverse.onrender.com"
     const [user, setUser] = React.useState({
         name: "",
         email: "",

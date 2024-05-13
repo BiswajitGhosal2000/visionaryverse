@@ -5,14 +5,14 @@ const mongoose = require('mongoose');
 
 // const bcrypt = require('bcryptjs');
 // const jwt = require('jsonwebtoken');
-// require('dotenv').config();
+require('dotenv').config();
 
 const Blog = require('../models/Blog');
 const blogLogger = require('../logger/blogLogger');
 const fetchuser = require('../middleware/fetchuser');
 const upload = require('../middleware/uploadphoto');
 
-const host = "http://localhost:5000/"
+const host = process.env.HOST;
 
 // Create a blog using: POST "/api/blogs/createblog". Require Auth
 // @route   POST /api/blogs/createblog

@@ -25,7 +25,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-const host = "http://localhost:5000/"
+const host = process.env.HOST;
 
 // @route   POST api/auth/signup
 // @desc    Register user
